@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Meaning of Surreal Numbers</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .math { font-family: 'Fira Code', monospace; font-weight: bold; }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between">
+
+    <header class="bg-slate-900 border-b border-slate-800 px-6 py-4">
+        <div class="max-w-3xl mx-auto flex justify-between items-center">
+            <div>
+                <h1 class="text-xl font-bold text-indigo-400">The Surreal Translator</h1>
+                <p class="text-xs text-slate-400">Watch abstract sets instantly turn into real values and plain English.</p>
+            </div>
+            <div id="step-counter" class="text-xs bg-slate-800 px-3 py-1 rounded-full text-slate-300 font-mono">
+                Step 1 of 6
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-3xl w-full mx-auto p-6 my-4 flex flex-col justify-center">
+        
+        <!-- STEP 0: DAY 0 -->
+        <div id="step-0" class="space-y-6">
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-xl">
+                <span class="text-xs font-bold text-indigo-400 font-mono uppercase tracking-wider">Day 0: The Anchor of Reality</span>
+                <h2 class="text-2xl font-bold mt-1 text-white">Starting from the Void</h2>
+                <p class="text-slate-300 text-sm leading-relaxed my-4">
+                    Before we can count, we must mark the center of the universe. Click both sides to tell the universe there are no boundaries yet.
+                </p>
+
+                <div class="bg-slate-950 p-4 rounded-lg border border-slate-800 flex flex-col items-center gap-4 my-4">
+                    <div class="flex items-center gap-4">
+                        <button onclick="triggerDay0('left')" id="d0-l" class="w-20 h-16 bg-slate-900 border-2 border-dashed border-slate-700 hover:border-cyan-500 rounded-lg flex items-center justify-center font-mono text-xl transition text-slate-500 cursor-pointer">?</button>
+                        <span class="text-2xl text-slate-600">|</span>
+                        <button onclick="triggerDay0('right')" id="d0-r" class="w-20 h-16 bg-slate-900 border-2 border-dashed border-slate-700 hover:border-rose-500 rounded-lg flex items-center justify-center font-mono text-xl transition text-slate-500 cursor-pointer">?</button>
+                    </div>
+                </div>
+
+                <div id="d0-translation" class="hidden border border-slate-800 rounded-xl overflow-hidden mt-6">
+                    <div class="bg-slate-950 px-4 py-2 border-b border-slate-800 text-xs font-mono text-slate-400">LIVE TRANSLATION MATRIX</div>
+                    <div class="p-4 space-y-3 bg-slate-900/40">
+                        <div><span class="text-xs text-slate-500 block">Conway Notation:</span><span class="math text-indigo-400 text-lg">{ ∅ | ∅ }</span></div>
+                        <div><span class="text-xs text-slate-500 block">Plain English Meaning:</span><p class="text-slate-200 text-sm italic">"Give me a starting point that is completely free, neutral, and unbound by any limits."</p></div>
+                        <div><span class="text-xs text-slate-500 block">Old Math Value:</span><span class="text-emerald-400 font-bold text-xl">0</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 1: DAY 1 BRANCHING PATHS -->
+        <div id="step-1" class="space-y-6 hidden">
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-xl">
+                <span class="text-xs font-bold text-cyan-400 font-mono uppercase tracking-wider">Day 1: Choosing a Path</span>
+                <h2 class="text-2xl font-bold mt-1 text-white">Altering the Vectors</h2>
+                <p class="text-slate-300 text-sm leading-relaxed my-4">
+                    You have unlocked <span class="math text-indigo-400">0</span>. Click a path below to see how changing which side the boundary is placed on alters the forces.
+                </p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-6">
+                    <button onclick="setPathDay1('pos')" id="btn-p1-pos" class="p-4 bg-slate-950 border border-slate-800 hover:border-cyan-500 rounded-xl text-left transition cursor-pointer">
+                        <span class="block font-bold text-cyan-400 text-sm mb-1">Path Alpha: { 0 | ∅ }</span>
+                        <span class="text-xs text-slate-400">Use 0 as a Floor, leave Ceiling empty.</span>
+                    </button>
+                    <button onclick="setPathDay1('neg')" id="btn-p1-neg" class="p-4 bg-slate-950 border border-slate-800 hover:border-rose-500 rounded-xl text-left transition cursor-pointer">
+                        <span class="block font-bold text-rose-400 text-sm mb-1">Path Beta: { ∅ | 0 }</span>
+                        <span class="text-xs text-slate-400">Leave Floor empty, use 0 as a Ceiling.</span>
+                    </button>
+                </div>
+
+                <div id="d1-workspace" class="border border-slate-800 rounded-xl overflow-hidden">
+                    <div class="bg-slate-950 px-4 py-2 border-b border-slate-800 text-xs font-mono text-slate-400">DYNAMIC TRANSLATION MATRIX</div>
+                    <div class="p-4 space-y-4 bg-slate-900/40">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div><span class="text-xs text-slate-500 block">Conway Notation:</span><span id="d1-note" class="math text-indigo-400 text-lg">{ 0 | ∅ }</span></div>
+                            <div><span class="text-xs text-slate-500 block">Old Math Value:</span><span id="d1-val" class="text-emerald-400 font-bold text-xl">+1</span></div>
+                        </div>
+                        <div><span class="text-xs text-slate-500 block">Plain English Meaning:</span><p id="d1-eng" class="text-slate-200 text-sm italic">"Give me the simplest number strictly larger than zero, with no upper limit constraint."</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 2: DAY 2 MIDPOINT -->
+        <div id="step-2" class="space-y-6 hidden">
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-xl">
+                <span class="text-xs font-bold text-amber-400 font-mono uppercase tracking-wider">Day 2: The Midpoint Gap</span>
+                <h2 class="text-2xl font-bold mt-1 text-white">Tug of War Between 0 and 1</h2>
+                <p class="text-slate-300 text-sm leading-relaxed my-3">
+                    Now we own <span class="math text-indigo-400">-1, 0, 1</span>. Let’s capture the space right between them by setting <span class="text-cyan-400 font-bold">0 as our Floor</span> and <span class="text-rose-400 font-bold">1 as our Ceiling</span>.
+                </p>
+
+                <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 my-6 text-center space-y-4">
+                    <div><span class="text-xs text-slate-500 block uppercase tracking-widest mb-1">Active Structure</span><span class="math text-2xl text-amber-400">{ 0 | 1 }</span></div>
+                    <div class="w-full max-w-md mx-auto pt-4 pb-2">
+                        <div class="h-2 w-full bg-slate-800 rounded-full relative">
+                            <div class="absolute left-0 -top-6 text-xs text-cyan-400 font-mono">Floor: 0</div>
+                            <div class="absolute right-0 -top-6 text-xs text-rose-400 font-mono">Ceiling: 1</div>
+                            <div class="absolute left-1/2 -translate-x-1/2 -top-1 h-4 w-4 bg-indigo-500 rounded-full ring-4 ring-indigo-950"></div>
+                            <div class="absolute left-1/2 -translate-x-1/2 top-4 text-xs font-bold text-emerald-400 font-mono">Value: 1/2</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border border-slate-800 rounded-xl overflow-hidden bg-slate-900/40">
+                    <div class="bg-slate-950 px-4 py-2 border-b border-slate-800 text-xs font-mono text-slate-400">CRITICAL SIGNIFICANCE ANALYSIS</div>
+                    <div class="p-4 space-y-3 text-sm text-slate-300">
+                        <p><strong>Plain English Translation:</strong> <em>"What is the simplest, most fundamental number that sits strictly higher than 0, but strictly lower than 1?"</em></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 3: CONSTRUCTING THE IMPOSSIBLE FRACTION (1/5) -->
+        <div id="step-3" class="space-y-6 hidden">
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-xl">
+                <span class="text-xs font-bold text-teal-400 font-mono uppercase tracking-wider">Step 4: The Complex Morse Signal</span>
+                <h2 class="text-2xl font-bold mt-1 text-white">Targeting the Fraction 1/5</h2>
+                <p class="text-slate-300 text-sm leading-relaxed">
+                    Some fractions, like <span class="text-teal-400 font-bold">1/5</span>, are not clean splits. To send a signal for $1/5$, you have to alternate your pushes. You must endlessly correct back and forth to home in on the decimal position ($0.2$).
+                </p>
+
+                <!-- Interactive Morse-Style Tug of War Tracker -->
+                <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 my-6 space-y-4">
+                    <div class="text-center">
+                        <span class="text-[10px] text-slate-500 block uppercase tracking-wider">Approximate Target Vector</span>
+                        <div id="fraction-display" class="text-2xl font-bold font-mono text-teal-400 mt-1">Value: 0.000</div>
+                    </div>
+
+                    <div class="flex gap-2 max-w-xs mx-auto">
+                        <button onclick="pressMorse('L')" class="flex-1 bg-cyan-950/60 hover:bg-cyan-900 border border-cyan-800 text-cyan-400 text-xs py-3 rounded-lg font-bold transition cursor-pointer">Push Floor Up (L)</button>
+                        <button onclick="pressMorse('R')" class="flex-1 bg-rose-950/60 hover:bg-rose-900 border border-rose-800 text-rose-400 text-xs py-3 rounded-lg font-bold transition cursor-pointer">Pull Ceiling Down (R)</button>
+                    </div>
+
+                    <div class="p-3 bg-slate-900 rounded border border-slate-800 text-[11px] font-mono text-slate-400 text-center">
+                        <span class="text-slate-500 block text-[10px] uppercase">Your Signal Path Matrix:</span>
+                        <div id="morse-path" class="tracking-widest font-bold text-white text-sm my-1">-</div>
+                        <span class="text-slate-500 text-[10px] block mt-1">Hint to hit exactly 0.200: Alternating commands over many rounds!</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 4: TO INFINITY AND BEYOND -->
+        <div id="step-4" class="space-y-6 hidden">
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-xl">
+                <span class="text-xs font-bold text-fuchsia-400 font-mono uppercase tracking-wider">Step 5: Breaking the Infinity Barrier</span>
+                <h2 class="text-2xl font-bold mt-1 text-white">Spelling Out Eternity ($\omega$)</h2>
+                <p class="text-slate-300 text-sm leading-relaxed">
+                    How do you type **Infinity** into your code device? You don't click once. You imagine keeping your finger clamped down on the **Left (Dot)** button forever.
+                </p>
+
+                <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 my-6 space-y-4">
+                    <div class="flex justify-between items-center bg-slate-900 p-3 rounded border border-slate-800 text-xs">
+                        <span class="math text-fuchsia-400 text-base">{ 0, 1, 2, 3... | ∅ }</span>
+                        <span class="font-mono text-right text-slate-400">Value: <strong class="text-white text-sm">ω (Omega)</strong></span>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        <strong>In Plain English:</strong> <em>"Give me a number that is strictly larger than every single counting integer that will ever be born in human history, with absolutely no ceiling capping it from above."</em>
+                    </p>
+                </div>
+
+                <div class="bg-slate-900/40 p-4 rounded-lg border border-slate-800 text-xs text-slate-400 leading-relaxed">
+                    <strong>The Ultimate Discovery:</strong> In normal math, infinity is a weird concept where normal rules break down. In Conway's system, $\omega$ is just a normal, regular number born on Day $\omega$! You can even add one to it to get $\omega + 1$.
+                </div>
+            </div>
+        </div>
+
+        <!-- NAVIGATION CONTROLS -->
+        <div class="flex justify-between items-center mt-6">
+            <button id="btn-back" onclick="changeStep(-1)" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-sm font-semibold rounded-lg transition opacity-50 cursor-not-allowed" disabled>
+                ← Back
+            </button>
+            <button id="btn-next" onclick="changeStep(1)" class="px-6 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold rounded-lg transition cursor-pointer">
+                Next →
+            </button>
+        </div>
+
+    </main>
+
+    <footer class="bg-slate-950 border-t border-slate-800 p-4 text-center">
+        <div class="max-w-3xl mx-auto text-xs font-mono text-slate-500">
+            Every set boundary dictates a precise spatial relationship.
+        </div>
+    </footer>
+
+    <script>
+        let currentStep = 0;
+        const totalSteps = 5;
+
+        let d0L = false, d0R = false;
+        
+        // Morse path emulator configuration
+        let currentFractionValue = 0.5;
+        let currentRangeMin = 0.0;
+        let currentRangeMax = 1.0;
+        let currentPathString = "";
+
+        function triggerDay0(side) {
+            if(side === 'left') { d0L = true; document.getElementById('d0-l').className = "w-20 h-16 bg-slate-950 border-2 border-solid border-cyan-500 rounded-lg flex items-center justify-center font-mono text-xl text-cyan-400"; document.getElementById('d0-l').innerText = "∅"; }
+            if(side === 'right') { d0R = true; document.getElementById('d0-r').className = "w-20 h-16 bg-slate-950 border-2 border-solid border-rose-500 rounded-lg flex items-center justify-center font-mono text-xl text-rose-400"; document.getElementById('d0-r').innerText = "∅"; }
+            
+            if(d0L && d0R) {
+                document.getElementById('d0-translation').classList.remove('hidden');
+            }
+        }
+
+        function setPathDay1(pathType) {
+            const btnPos = document.getElementById('btn-p1-pos');
+            const btnNeg = document.getElementById('btn-p1-neg');
+
+            if(pathType === 'pos') {
+                btnPos.className = "p-4 bg-slate-900 border-2 border-cyan-500 rounded-xl text-left transition";
+                btnNeg.className = "p-4 bg-slate-950 border border-slate-800 hover:border-rose-500 rounded-xl text-left transition opacity-40";
+                document.getElementById('d1-note').innerText = "{ 0 | ∅ }";
+                document.getElementById('d1-val').innerText = "+1";
+            } else {
+                btnNeg.className = "p-4 bg-slate-900 border-2 border-rose-500 rounded-xl text-left transition";
+                btnPos.className = "p-4 bg-slate-950 border border-slate-800 hover:border-cyan-500 rounded-xl text-left transition opacity-40";
+                document.getElementById('d1-note').innerText = "{ ∅ | 0 }";
+                document.getElementById('d1-val').innerText = "-1";
+            }
+        }
+
+        function pressMorse(move) {
+            currentPathString += move + " ";
+            document.getElementById('morse-path').innerText = currentPathString;
+
+            // Simple midpoint updates matching real tree shifts
+            if(move === 'L') {
+                currentRangeMin = currentFractionValue;
+            } else {
+                currentRangeMax = currentFractionValue;
+            }
+            currentFractionValue = (currentRangeMin + currentRangeMax) / 2;
+            document.getElementById('fraction-display').innerText = `Value: ${currentFractionValue.toFixed(3)}`;
+        }
+
+        function changeStep(direction) {
+            if (currentStep === 0 && direction === 1 && (!d0L || !d0R)) {
+                alert("Please click both boxes first to initialize Day 0 before moving forward!");
+                return;
+            }
+
+            document.getElementById(`step-${currentStep}`).classList.add('hidden');
+            currentStep += direction;
+
+            document.getElementById(`step-${currentStep}`).classList.remove('hidden');
+
+            document.getElementById('btn-back').disabled = (currentStep === 0);
+            if (currentStep === 0) {
+                document.getElementById('btn-back').className = "px-4 py-2 bg-slate-800 text-slate-500 text-sm font-semibold rounded-lg transition opacity-50 cursor-not-allowed";
+            } else {
+                document.getElementById('btn-back').className = "px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-sm font-semibold rounded-lg transition cursor-pointer";
+            }
+
+            if (currentStep === totalSteps - 1) {
+                document.getElementById('btn-next').innerText = "Finish Journey";
+                document.getElementById('btn-next').className = "px-6 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold rounded-lg transition cursor-pointer";
+            } else {
+                document.getElementById('btn-next').innerText = "Next →";
+                document.getElementById('btn-next').className = "px-6 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold rounded-lg transition cursor-pointer";
+            }
+
+            document.getElementById('step-counter').innerText = `Step ${currentStep + 1} of ${totalSteps}`;
+        }
+    </script>
+</body>
+</html>
