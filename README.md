@@ -27,32 +27,6 @@ The application is built entirely as a single-page, dependency-free interactive 
 
 This project is released under the standard, permissive MIT License model. It is completely free of restrictive upstream constraints and is fully safe for redistribution, modification, or personal forks.
 
-```text
-MIT License
-
-Copyright (c) 2026
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-It is completely normal to feel confused there! When you are in that "Tug of War" step, clicking $L$ or $R$ changes the math live, but without knowing the exact sequence of clicks, you are essentially trying to type Morse code blindly without a dictionary.
-
-Let’s lay out the exact "cheat codes" (the sequence of buttons) to reach specific values so you can see exactly how the paths work.
-
 ---
 
 ### 🗺️ The "Morse Code" Cheat Sheet
