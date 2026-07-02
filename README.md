@@ -1,5 +1,54 @@
 ## Surreal Number Learning Tool
 
+# Code Architecture & Project Licensing
+
+This document provides a technical breakdown of the interactive single-page application engine and outlines its open-source licensing terms.
+
+---
+
+## 🛠️ Code Architecture Overview
+
+The application is built entirely as a single-page, dependency-free interactive system. Below is a breakdown of how the background engine processes John Horton Conway's mathematical logic in real-time:
+
+* **State Machine Navigation:** View routing is completely controlled by a global state index (`currentStep`). Clicking **Next** or **Back** fires a transition function that selectively modifies the DOM by adding or removing Tailwind's structural hiding elements (`.hidden`), eliminating the need for page refreshes.
+* **The Binary Decelerator Engine (Step 4):** When you interact with the "Tug of War" console, the JavaScript engine simulates an iterative binary search across bounds to translate user path signals directly into rational decimal values:
+    * Clicking **L (Left)** updates the lower boundary limit:  
+      `currentRangeMin = currentFractionValue;`
+    * Clicking **R (Right)** updates the upper boundary limit:  
+      `currentRangeMax = currentFractionValue;`
+    * The system recalculates the precise midpoint configuration:  
+      `(currentRangeMin + currentRangeMax) / 2`  
+      and dynamically updates the user-facing translation matrix.
+* **Front-End Layer:** Styles are compiled on the fly using a Tailwind CSS CDN injection layer. It uses isolated slate color blocks (`bg-slate-950`, `text-slate-100`) to create a readable, modern, dark-mode terminal vibe suited for long-form reading.
+
+---
+
+## 📄 Open Source License (MIT)
+
+This project is released under the standard, permissive MIT License model. It is completely free of restrictive upstream constraints and is fully safe for redistribution, modification, or personal forks.
+
+```text
+MIT License
+
+Copyright (c) 2026
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 It is completely normal to feel confused there! When you are in that "Tug of War" step, clicking $L$ or $R$ changes the math live, but without knowing the exact sequence of clicks, you are essentially trying to type Morse code blindly without a dictionary.
 
 Let’s lay out the exact "cheat codes" (the sequence of buttons) to reach specific values so you can see exactly how the paths work.
