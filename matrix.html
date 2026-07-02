@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surreal High-Complexity Matrix</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .math { font-family: 'Fira Code', monospace; }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between overflow-hidden">
+
+    <header class="bg-slate-900 border-b border-slate-800 px-6 py-4 z-10 shadow-lg">
+        <div class="max-w-6xl mx-auto flex flex-wrap justify-between items-center gap-4">
+            <div>
+                <h1 class="text-xl font-bold text-indigo-400">The Infinite Continuum Engine</h1>
+                <p class="text-xs text-slate-400">Manipulate recursive generation paths and vector alignment angles in real-time.</p>
+            </div>
+            
+            <div class="flex flex-wrap items-center gap-6 bg-slate-950 p-2 rounded-xl border border-slate-850 text-xs font-mono">
+                <div class="flex items-center gap-2">
+                    <span class="text-slate-500">Day Depth:</span>
+                    <input type="range" id="depth-slider" min="1" max="8" value="4" oninput="updateControls()" class="w-24 h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500">
+                    <span id="depth-val" class="text-indigo-400 font-bold w-4">4</span>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <span class="text-slate-500">Separation Angle:</span>
+                    <input type="range" id="angle-slider" min="15" max="90" value="35" oninput="updateControls()" class="w-24 h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-500">
+                    <span id="angle-val" class="text-cyan-400 font-bold w-6">35°</span>
+                </div>
+
+                <label class="flex items-center gap-2 cursor-pointer select-none">
+                    <span class="text-slate-500">Bipolar Crystal Mirror:</span>
+                    <input type="checkbox" id="mirror-toggle" onchange="updateControls()" class="sr-only peer">
+                    <div class="w-8 h-4 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-slate-400 after:border-slate-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-emerald-600 peer-checked:after:bg-white relative"></div>
+                </label>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 flex flex-col items-center justify-center p-4 relative">
+        <canvas id="deepCanvas" class="bg-slate-950 max-w-full max-h-[70vh] rounded-xl border border-slate-900 shadow-2xl"></canvas>
+        
+        <div class="w-full max-w-2xl bg-slate-900/40 backdrop-blur border border-slate-850 rounded-xl p-4 mt-4 grid grid-cols-3 gap-4 text-center font-mono text-[11px]">
+            <div>
+                <span class="text-slate-500 block uppercase text-[9px] tracking-wider mb-0.5">Calculated Elements</span>
+                <span id="telemetry-nodes" class="text-indigo-400 font-bold text-sm">31</span>
+            </div>
+            <div>
+                <span class="text-slate-500 block uppercase text-[9px] tracking-wider mb-0.5">Active Continuum Depth</span>
+                <span id="telemetry-complexity" class="text-cyan-400 font-bold text-sm">Finely Segmented Fraction Field</span>
+            </div>
+            <div>
+                <span class="text-slate-500 block uppercase text-[9px] tracking-wider mb-0.5">Structural Stability</span>
+                <span class="text-emerald-400 font-bold text-sm">100% Coherent</span>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-slate-950 border-t border-slate-900 p-2.5 text-center text-[10px] font-mono text-slate-600">
+        High-Density Recursive Conway Variable Field Generator
+    </footer>
+
+    <script>
+        const canvas = document.getElementById('deepCanvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = 900;
+        canvas.height = 550;
+
+        // Configuration variables tracking live user changes
+        let maxDepth = 4;
+        let branchAngle = 35 * Math.PI / 180;
+        let isMirrored = false;
+        let nodeCountAccumulator = 0;
+
+        function updateControls() {
+            maxDepth = parseInt(document.getElementById('depth-slider').value);
+            let angleDeg = parseInt(document.getElementById('angle-slider').value);
+            branchAngle = angleDeg * Math.PI / 180;
+            isMirrored = document.getElementById('mirror-toggle').checked;
+
+            // Update interface dashboard labels text immediately
+            document.getElementById('depth-val').innerText = maxDepth;
+            document.getElementById('angle-val').innerText = angleDeg + "°";
+
+            // Process text modifications dynamically based on calculation complexity load
+            const complexityTag = document.getElementById('telemetry-complexity');
+            if (maxDepth <= 3) complexityTag.innerText = "Basic Integer Space";
+            else if (maxDepth <= 5) complexityTag.innerText = "Dense Fraction Matrix";
+            else complexityTag.innerText = "Approaching Infinite Boundary (ω)";
+        }
+
+        // Recursive structural vector drawing logic
+        function drawDeepBranch(x1, y1, length, angle, currentDepth) {
+            if (currentDepth > maxDepth) return;
+            nodeCountAccumulator++;
+
+            let x2 = x1 + length * Math.sin(angle);
+            let y2 = y1 - length * Math.cos(angle);
+
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            
+            // Generate elegant color gradients down across depth channels
+            let hue = 220 + (currentDepth * 22);
+            ctx.strokeStyle = `hsl(${hue}, 85%, 60%)`;
+            ctx.lineWidth = Math.max(0.5, 7 - currentDepth * 0.8);
+            ctx.stroke();
+
+            // Symmetrically divide paths recursively
+            let scaleFactor = 0.74;
+            drawDeepBranch(x2, y2, length * scaleFactor, angle - branchAngle, currentDepth + 1);
+            drawDeepBranch(x2, y2, length * scaleFactor, angle + branchAngle, currentDepth + 1);
+        }
+
+        function engineRenderLoop(timestamp) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Reset node calculator tracking variable counter before repaint operation
+            nodeCountAccumulator = 0;
+
+            if (!isMirrored) {
+                // RENDER TOP-ORIENTED VEIN FLUID MODE
+                drawDeepBranch(canvas.width / 2, canvas.height * 0.88, 120, 0, 1);
+            } else {
+                // RENDER BIPOLAR SYSTEM CRYSTAL MESH (Mirroring positive and negative vectors simultaneously)
+                // Top Canopy Branch
+                drawDeepBranch(canvas.width / 2, canvas.height / 2, 85, 0, 1);
+                // Bottom Canopy Branch Mirror
+                drawDeepBranch(canvas.width / 2, canvas.height / 2, 85, Math.PI, 1);
+            }
+
+            // Sync structural telemetry nodes counter text inside console view
+            document.getElementById('telemetry-nodes').innerText = nodeCountAccumulator;
+
+            requestAnimationFrame(engineRenderLoop);
+        }
+
+        // Run configuration parameters calibration and ignite core frame tracking engine loop
+        updateControls();
+        requestAnimationFrame(engineRenderLoop);
+    </script>
+</body>
+</html>
