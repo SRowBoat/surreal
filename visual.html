@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surreal Number Symbolic & Visual Calculator</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;600&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .math { font-family: 'Fira Code', monospace; font-weight: 600; }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between">
+
+    <header class="bg-slate-900 border-b border-slate-800 px-6 py-4 shadow-md">
+        <div class="max-w-5xl mx-auto">
+            <h1 class="text-xl font-bold text-indigo-400">Visual Surreal Arithmetic Engine</h1>
+            <p class="text-xs text-slate-400">Perform symbolic recursive addition and see the spatial geometry change in real-time.</p>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-5xl w-full mx-auto p-6 my-4 grid md:grid-cols-3 gap-6 items-start">
+        
+        <div class="bg-slate-900 border border-slate-800 p-5 rounded-xl shadow-xl space-y-6">
+            <div>
+                <h2 class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-3">1. Select Number X</h2>
+                <div class="grid grid-cols-2 gap-2">
+                    <button onclick="setNum('X', -1)" id="btn-X-neg1" class="p-2 bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-lg text-xs font-mono transition text-left cursor-pointer">
+                        <span class="text-rose-400 block font-bold">-1</span> { ∅ | 0 }
+                    </button>
+                    <button onclick="setNum('X', 0)" id="btn-X-0" class="p-2 bg-slate-950 border border-indigo-500 rounded-lg text-xs font-mono transition text-left cursor-pointer ring-1 ring-indigo-950">
+                        <span class="text-indigo-400 block font-bold">0</span> { ∅ | ∅ }
+                    </button>
+                    <button onclick="setNum('X', 1)" id="btn-X-1" class="p-2 bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-lg text-xs font-mono transition text-left cursor-pointer">
+                        <span class="text-cyan-400 block font-bold">1</span> { 0 | ∅ }
+                    </button>
+                    <button onclick="setNum('X', 0.5)" id="btn-X-half" class="p-2 bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-lg text-xs font-mono transition text-left cursor-pointer">
+                        <span class="text-amber-400 block font-bold">1/2</span> { 0 | 1 }
+                    </button>
+                </div>
+            </div>
+
+            <div>
+                <h2 class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-3">2. Select Number Y</h2>
+                <div class="grid grid-cols-2 gap-2">
+                    <button onclick="setNum('Y', -1)" id="btn-Y-neg1" class="p-2 bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-lg text-xs font-mono transition text-left cursor-pointer">
+                        <span class="text-rose-400 block font-bold">-1</span> { ∅ | 0 }
+                    </button>
+                    <button onclick="setNum('Y', 0)" id="btn-Y-0" class="p-2 bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-lg text-xs font-mono transition text-left cursor-pointer">
+                        <span class="text-indigo-400 block font-bold">0</span> { ∅ | ∅ }
+                    </button>
+                    <button onclick="setNum('Y', 1)" id="btn-Y-1" class="p-2 bg-slate-950 border border-indigo-500 rounded-lg text-xs font-mono transition text-left cursor-pointer ring-1 ring-indigo-950">
+                        <span class="text-cyan-400 block font-bold">1</span> { 0 | ∅ }
+                    </button>
+                    <button onclick="setNum('Y', 0.5)" id="btn-Y-half" class="p-2 bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-lg text-xs font-mono transition text-left cursor-pointer">
+                        <span class="text-amber-400 block font-bold">1/2</span> { 0 | 1 }
+                    </button>
+                </div>
+            </div>
+
+            <button onclick="calculateSurrealAddition()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2.5 rounded-lg transition shadow-lg shadow-indigo-950/40 text-sm cursor-pointer">
+                Compute & Update Geometry
+            </button>
+        </div>
+
+        <div class="md:col-span-2 bg-slate-900 border border-slate-800 rounded-xl shadow-xl overflow-hidden flex flex-col justify-between self-stretch">
+            <div class="bg-slate-950 px-4 py-3 border-b border-slate-800 text-xs font-mono text-slate-400 tracking-wider">
+                SYMBOLIC & GRAPHIC INTERPRETATION MATRIX
+            </div>
+            
+            <div class="p-6 space-y-6 flex-1 flex flex-col justify-between">
+                <div class="flex items-center justify-center gap-4 text-center">
+                    <div class="p-3 bg-slate-950 rounded-lg border border-slate-800 min-w-20">
+                        <span class="text-[10px] text-slate-500 block font-mono">X</span>
+                        <span id="label-x" class="math text-base text-white">0</span>
+                    </div>
+                    <span class="text-xl font-light text-slate-600">+</span>
+                    <div class="p-3 bg-slate-950 rounded-lg border border-slate-800 min-w-20">
+                        <span class="text-[10px] text-slate-500 block font-mono">Y</span>
+                        <span id="label-y" class="math text-base text-white">1</span>
+                    </div>
+                    <span class="text-xl font-light text-slate-600">=</span>
+                    <div class="p-3 bg-indigo-950/40 rounded-lg border border-indigo-900/60 min-w-20">
+                        <span class="text-[10px] text-indigo-400 block font-mono">RESULT</span>
+                        <span id="label-res" class="math text-base text-emerald-400">1</span>
+                    </div>
+                </div>
+
+                <div class="bg-slate-950 border border-slate-850 rounded-xl p-6 flex flex-col items-center justify-center min-h-40 relative overflow-hidden">
+                    <div class="absolute top-2 left-3 text-[9px] font-mono text-slate-600 uppercase tracking-widest">Spatial Geometry Model</div>
+                    
+                    <div id="view-scale" class="hidden text-center space-y-3 w-full max-w-xs">
+                        <div class="math text-xs text-slate-500">Perfect Equilibrium</div>
+                        <div class="w-full h-1 bg-slate-700 rounded relative mx-auto flex justify-between px-2 items-center">
+                            <div class="h-6 w-6 border border-slate-800 bg-slate-900/60 rounded -mt-3 flex items-center justify-center font-mono text-[9px] text-slate-400">L</div>
+                            <div class="absolute left-1/2 -translate-x-1/2 -top-1 h-3 w-3 bg-indigo-500 rotate-45 border-t border-l border-slate-950"></div>
+                            <div class="h-6 w-6 border border-slate-800 bg-slate-900/60 rounded -mt-3 flex items-center justify-center font-mono text-[9px] text-slate-400">R</div>
+                        </div>
+                    </div>
+
+                    <div id="view-plumb" class="hidden text-center space-y-4 w-full max-w-sm">
+                        <div class="math text-xs text-slate-500">Midpoint Intersection Selection</div>
+                        <div class="h-1 w-full bg-slate-800 rounded-full relative">
+                            <div id="plumb-floor" class="absolute left-4 -top-6 text-[10px] font-mono text-cyan-400">Floor</div>
+                            <div id="plumb-ceil" class="absolute right-4 -top-6 text-[10px] font-mono text-rose-400">Ceiling</div>
+                            <div class="absolute left-1/2 -translate-x-1/2 -top-1 h-3 w-3 bg-amber-500 rounded-full ring-4 ring-amber-950"></div>
+                            <div class="absolute left-1/2 -translate-x-1/2 top-4 w-1 h-6 bg-amber-500/50 border-dashed border-l border-amber-400"></div>
+                        </div>
+                    </div>
+
+                    <div id="view-stairs" class="hidden text-center space-y-2 w-full max-w-xs">
+                        <div class="math text-xs text-slate-500">Day-by-Day Integer Accumulation</div>
+                        <div class="flex items-end justify-center h-16 font-mono text-[10px] text-slate-500">
+                            <div id="st-block-1" class="w-10 bg-slate-900 border border-slate-800 h-4 text-center pt-0.5">-1</div>
+                            <div id="st-block-2" class="w-10 bg-slate-800 border border-slate-700 h-8 text-center pt-1.5">0</div>
+                            <div id="st-block-3" class="w-10 bg-indigo-950 border border-indigo-800 h-12 text-center pt-3 text-indigo-400 font-bold">+1</div>
+                            <div id="st-block-4" class="w-10 bg-slate-900 border border-slate-800 h-16 text-center pt-4 opacity-30">+2</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-950 border border-slate-800 rounded-xl p-4">
+                    <span class="text-[10px] text-slate-500 block font-mono uppercase tracking-widest mb-1">Raw Unreduced Set Construction</span>
+                    <div id="set-expansion" class="math text-xs text-indigo-300 break-all bg-slate-900/50 p-2.5 rounded border border-slate-850">
+                        -
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="bg-slate-950 border-t border-slate-800 p-4 text-center text-xs font-mono text-slate-600">
+        Conway Geometric & Additive Hybrid Core Engine
+    </footer>
+
+    <script>
+        const surrealRegistry = {
+            "0":   { val: 0,   left: [],    right: [],   str: "0" },
+            "1":   { val: 1,   left: ["0"], right: [],   str: "1" },
+            "-1":  { val: -1,  left: [],    right: ["0"], str: "-1" },
+            "0.5": { val: 0.5, left: ["0"], right: ["1"], str: "1/2" }
+        };
+
+        let activeX = surrealRegistry["0"];
+        let activeY = surrealRegistry["1"];
+
+        function setNum(operand, value) {
+            const numKey = value.toString();
+            const obj = surrealRegistry[numKey];
+            
+            if(operand === 'X') {
+                activeX = obj;
+                document.getElementById('label-x').innerText = obj.str;
+                ["0", "1", "-1", "0.5"].forEach(k => document.getElementById(`btn-X-${k=== '0.5'?'half':k==='-1'?'neg1':k}`).className="p-2 bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-lg text-xs font-mono transition text-left cursor-pointer");
+                document.getElementById(`btn-X-${numKey=== '0.5'?'half':numKey==='-1'?'neg1':numKey}`).className="p-2 bg-slate-950 border border-indigo-500 rounded-lg text-xs font-mono transition text-left cursor-pointer ring-1 ring-indigo-950";
+            } else {
+                activeY = obj;
+                document.getElementById('label-y').innerText = obj.str;
+                ["0", "1", "-1", "0.5"].forEach(k => document.getElementById(`btn-Y-${k=== '0.5'?'half':k==='-1'?'neg1':k}`).className="p-2 bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-lg text-xs font-mono transition text-left cursor-pointer");
+                document.getElementById(`btn-Y-${numKey=== '0.5'?'half':numKey==='-1'?'neg1':numKey}`).className="p-2 bg-slate-950 border border-indigo-500 rounded-lg text-xs font-mono transition text-left cursor-pointer ring-1 ring-indigo-950";
+            }
+        }
+
+        function calculateSurrealAddition() {
+            let leftSetElements = [];
+            let rightSetElements = [];
+
+            activeX.left.forEach(lx => leftSetElements.push(`${lx} + ${activeY.str}`));
+            activeY.left.forEach(ly => leftSetElements.push(`${activeX.str} + ${ly}`));
+            activeX.right.forEach(rx => rightSetElements.push(`${rx} + ${activeY.str}`));
+            activeY.right.forEach(ry => rightSetElements.push(`${activeX.str} + ${ry}`));
+
+            let leftStr = leftSetElements.length > 0 ? leftSetElements.join(", ") : "∅";
+            let rightStr = rightSetElements.length > 0 ? rightSetElements.join(", ") : "∅";
+            
+            document.getElementById('set-expansion').innerText = `{ ${leftStr} | ${rightStr} }`;
+            
+            let totalValue = activeX.val + activeY.val;
+            
+            let displayResult = totalValue;
+            if(totalValue === 1.5) displayResult = "1½";
+            if(totalValue === -0.5) displayResult = "-½";
+            if(totalValue === -1.5) displayResult = "-1½";
+
+            document.getElementById('label-res').innerText = displayResult;
+
+            // TOGGLE GRAPHIC VIEWS BASED ON MATH OUTCOMES
+            document.getElementById('view-scale').classList.add('hidden');
+            document.getElementById('view-plumb').classList.add('hidden');
+            document.getElementById('view-stairs').classList.add('hidden');
+
+            if (totalValue === 0) {
+                // Show Scale View
+                document.getElementById('view-scale').classList.remove('hidden');
+            } else if (totalValue % 1 !== 0) {
+                // Show Plumb Bob Fraction View
+                document.getElementById('view-plumb').classList.remove('hidden');
+                // Calculate conceptual boundary flags based on proximity context
+                document.getElementById('plumb-floor').innerText = `Floor: ${Math.floor(totalValue)}`;
+                document.getElementById('plumb-ceil').innerText = `Ceiling: ${Math.ceil(totalValue)}`;
+            } else {
+                // Show Integer Staircase View
+                document.getElementById('view-stairs').classList.remove('hidden');
+                // Dynamic adjustments of step text tags based on output values
+                document.getElementById('st-block-1').innerText = totalValue - 2;
+                document.getElementById('st-block-2').innerText = totalValue - 1;
+                document.getElementById('st-block-3').innerText = `★ ${displayResult}`;
+                document.getElementById('st-block-4').innerText = totalValue + 1;
+            }
+        }
+
+        // Run initial setup configuration on window generation
+        calculateSurrealAddition();
+    </script>
+</body>
+</html>
