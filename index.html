@@ -244,33 +244,67 @@
         }
 
         function changeStep(direction) {
-            if (currentStep === 0 && direction === 1 && (!d0L || !d0R)) {
-                alert("Please click both boxes first to initialize Day 0 before moving forward!");
-                return;
-            }
+    // If we try to move past the last step, trigger the "Finish" event!
+    if (currentStep === totalSteps - 1 && direction === 1) {
+        showFinalCelebration();
+        return;
+    }
 
-            document.getElementById(`step-${currentStep}`).classList.add('hidden');
-            currentStep += direction;
+    if (currentStep === 0 && direction === 1 && (!d0L || !d0R)) {
+        alert("Please click both boxes first to initialize Day 0 before moving forward!");
+        return;
+    }
 
-            document.getElementById(`step-${currentStep}`).classList.remove('hidden');
+    document.getElementById(`step-${currentStep}`).classList.add('hidden');
+    currentStep += direction;
 
-            document.getElementById('btn-back').disabled = (currentStep === 0);
-            if (currentStep === 0) {
-                document.getElementById('btn-back').className = "px-4 py-2 bg-slate-800 text-slate-500 text-sm font-semibold rounded-lg transition opacity-50 cursor-not-allowed";
-            } else {
-                document.getElementById('btn-back').className = "px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-sm font-semibold rounded-lg transition cursor-pointer";
-            }
+    document.getElementById(`step-${currentStep}`).classList.remove('hidden');
 
-            if (currentStep === totalSteps - 1) {
-                document.getElementById('btn-next').innerText = "Finish Journey";
-                document.getElementById('btn-next').className = "px-6 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold rounded-lg transition cursor-pointer";
-            } else {
-                document.getElementById('btn-next').innerText = "Next →";
-                document.getElementById('btn-next').className = "px-6 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold rounded-lg transition cursor-pointer";
-            }
+    document.getElementById('btn-back').disabled = (currentStep === 0);
+    if (currentStep === 0) {
+        document.getElementById('btn-back').className = "px-4 py-2 bg-slate-800 text-slate-500 text-sm font-semibold rounded-lg transition opacity-50 cursor-not-allowed";
+    } else {
+        document.getElementById('btn-back').className = "px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-sm font-semibold rounded-lg transition cursor-pointer";
+    }
 
-            document.getElementById('step-counter').innerText = `Step ${currentStep + 1} of ${totalSteps}`;
-        }
+    if (currentStep === totalSteps - 1) {
+        document.getElementById('btn-next').innerText = "Finish Journey";
+        document.getElementById('btn-next').className = "px-6 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold rounded-lg transition cursor-pointer";
+    } else {
+        document.getElementById('btn-next').innerText = "Next →";
+        document.getElementById('btn-next').className = "px-6 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold rounded-lg transition cursor-pointer";
+    }
+
+    document.getElementById('step-counter').innerText = `Step ${currentStep + 1} of ${totalSteps}`;
+}
+
+// Brand new function to handle the ending!
+function showFinalCelebration() {
+    // Hide the active step and navigation buttons
+    document.getElementById(`step-${currentStep}`).classList.add('hidden');
+    document.getElementById('btn-back').classList.add('hidden');
+    document.getElementById('btn-next').classList.add('hidden');
+    
+    // Turn the main area into a celebration screen
+    const mainArea = document.querySelector('main');
+    mainArea.innerHTML = `
+        <div class="bg-slate-900 border-2 border-emerald-500/30 rounded-xl p-8 shadow-2xl text-center space-y-6 animate-fade-in">
+            <span class="text-5xl block">🌌</span>
+            <h2 class="text-3xl font-bold bg-gradient-to-r from-emerald-400 to-indigo-400 bg-clip-text text-transparent">Universe Stabilized!</h2>
+            <p class="text-slate-300 text-sm max-w-md mx-auto leading-relaxed">
+                Congratulations, Architect. You have successfully navigated from absolute nothingness <span class="math text-slate-400 font-mono">{ ∅ | ∅ }</span> all the way to the edge of infinity <span class="math text-fuchsia-400 font-mono">ω</span>.
+            </p>
+            <div class="p-4 bg-slate-950 rounded-lg border border-slate-800 inline-block text-xs font-mono text-slate-400">
+                Total Discoveries: Integers, Fractions, Infinitesimals, & Ordinals
+            </div>
+            <div class="pt-2">
+                <button onclick="window.location.reload();" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold py-2 px-6 rounded-lg transition cursor-pointer">
+                    Restart Creation Day
+                </button>
+            </div>
+        </div>
+    `;
+}
     </script>
 </body>
 </html>
